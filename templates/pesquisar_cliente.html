@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pesquisar Cliente</title>
+    <link rel="stylesheet"  href="/static/main.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <style>
+        body{
+            flex-direction: row;
+        }
+    </style>
+</head>
+<body>
+    <!--  SIDE MENU  -->
+    <div class="sidebar">
+        <button class="expand-btn" onclick="toggleMenu()">☰</button>
+        <div class="menu">
+            <button class="menu-btn" onclick="homeBtn()"><span class="material-symbols-outlined">home</span><span class="menu-text">Home</span></button>
+            <button class="menu-btn" onclick="clientesBtn()" id="clientes"><span class="material-symbols-outlined">person</span><span class="menu-text">Clientes</span></button>
+            <button class="menu-btn" onclick="motasBtn()"><span class="material-symbols-outlined">sports_motorsports</span><span class="menu-text">Veículos</span></button>
+            <button class="menu-btn" onclick="outrosBtn()"><span class="material-symbols-outlined">widgets</span><span class="menu-text">Outros</span></button>
+        </div>
+        <div class="last-btn">
+            <button class="menu-btn" onclick="definicoesBtn()"><span class="material-symbols-outlined">settings</span><span class="menu-text">Definições</span></button>
+        </div>
+    </div>
+    <!--  SIDE MENU  -->
+    <div class="content">
+        <div class="st1-container">
+            <div class="inner-st1-container">
+                <form action="/Pesquisar-Cliente" method="POST">
+                    <label for="nome">Nome:</label>
+                    <input type="text" name="nome" placeholder="Nome">
+                    <label for="nif">Número de Contribuinte:</label>
+                    <input type="text" name="nif" placeholder="Número de Contribuinte">
+                    <label for="telefone">Número de Telefone:</label>
+                    <input type="text" name="telefone" placeholder="Número de Telefone">
+                    <button class="pesquisar-cliente-btn">Pesquisar</button>
+                </form>
+            </div>
+        </div>
+        <div class="resultados-container">
+            {% if resultados %}
+                {% for cliente in resultados %}
+                    <div class="inner-resultados-container">
+                        <p>●<span><strong>Nome: </strong>{{ cliente.nome }}</span><span><strong>NIF: </strong>{{ cliente.nif }}</span><span><strong>Telefone: </strong>{{ cliente.telefone }}</span><span><strong>E-mail: </strong>{{ cliente.email }}</span></p>
+                        <div class="btn-resultados">
+                            <button class="editar-pesquisar-btn" data-cliente-id="{{ cliente.id }}" onclick="redirecionarEditar(this)">Editar</button>
+                            <button class="download-pesquisar-btn" data-cliente-id="{{ cliente.id }}" onclick="downloadDocumentos(this)">Download</button>
+                            {% if cliente.sinistro_aberto %}
+                                <button class="terminar-pesquisar-btn" data-sinistro-id="{{ cliente.sinistro_aberto.id }}" onclick="terminarContrato(this)">Terminar</button>
+                            {% else %}
+                                <button class="criar-pesquisar-btn" data-cliente-id="{{ cliente.id }}" onclick="criarContrato(this)">Criar</button>
+                            {% endif %}
+                            <button class="sinistros-pesquisar-btn" id="sinistrosPesquisaBtn" data-cliente-id="{{ cliente.id }}" onclick="buscarSinistros(this)">Sinistros</button>
+                        </div>
+                    </div>
+                {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+    <footer class="footer">
+        <script src="/static/js/footer.js"></script>
+    </footer>
+    <script>
+        // SIDE MENU
+        function toggleMenu() {
+            document.querySelector('.sidebar').classList.toggle('open');
+        }
+        // BOTÕES SIDE MENU
+        function homeBtn() {
+            window.location.href = "/Home"; 
+        }
+        function clientesBtn() {
+            window.location.href = "/Clientes"; 
+        }
+        function motasBtn() {
+            window.location.href = "/Veículos"; 
+        }
+        function outrosBtn() {
+            window.location.href = "/Outros"; 
+        }
+        function definicoesBtn() {
+            window.location.href = "/Definições";  
+        }
+        function redirecionarEditar(button) {
+            var clienteId = button.getAttribute('data-cliente-id');
+            window.location.href = "/Editar-Cliente/" + clienteId;
+        }
+        function downloadDocumentos(button) {
+            var clienteId = button.getAttribute('data-cliente-id');
+            window.location.href = '/download-documentos/' + clienteId;
+        }
+        function terminarContrato(button) {
+            var sinistroId = button.getAttribute('data-sinistro-id');
+            fetch('/Terminar-Contrato/' + sinistroId, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({})
+            })
+            .then(response => response.json())
+            .then(data => {
+                alert(data.message);
+                location.reload();
+            })
+            .catch(error => console.error('Error:', error));
+        }
+        function criarContrato(button) {
+            var sinistroId = button.getAttribute('data-sinistro-id');
+            var clienteId = button.getAttribute('data-cliente-id');
+            
+            fetch('/Criar-Sinistro/' + clienteId, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    sinistro_id: sinistroId
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                alert(data.message);
+                location.reload();
+            })
+            .catch(error => console.error('Error:', error));
+        }
+        function buscarSinistros(button) {
+            var clienteId = button.getAttribute('data-cliente-id');
+            window.location.href = '/Sinistros/' + clienteId;
+        }
+    </script>
+</body>
+</html>

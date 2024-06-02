@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Criar Novo Veículo</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <link rel="stylesheet"  href="/static/main.css">
+</head>
+<body>
+    <!--  SIDE MENU  -->
+    <div class="sidebar">
+        <button class="expand-btn" onclick="toggleMenu()">☰</button>
+        <div class="menu">
+            <button class="menu-btn" onclick="homeBtn()"><span class="material-symbols-outlined">home</span><span class="menu-text">Home</span></button>
+            <button class="menu-btn" onclick="clientesBtn()"><span class="material-symbols-outlined">person</span><span class="menu-text">Clientes</span></button>
+            <button class="menu-btn" onclick="motasBtn()" id="veiculos"><span class="material-symbols-outlined">sports_motorsports</span><span class="menu-text">Veículos</span></button>
+            <button class="menu-btn" onclick="outrosBtn()"><span class="material-symbols-outlined">widgets</span><span class="menu-text">Outros</span></button>
+        </div>
+        <div class="last-btn">
+            <button class="menu-btn" onclick="definicoesBtn()"><span class="material-symbols-outlined">settings</span><span class="menu-text">Definições</span></button>
+        </div>
+    </div>
+    <!--  SIDE MENU  -->
+    <!-- FORMULÁRIO -->
+    <div class="form-container">
+        <form action="/Criar-Novo-Veiculo" method="POST" enctype="multipart/form-data">
+            <label for="marca">Marca:</label>
+            <input type="text" id="marca" name="marca" placeholder="Honda" required>
+
+            <label for="modelo">Modelo:</label>
+            <input type="text" id="modelo" name="modelo" placeholder="PCX" required>
+
+            <label for="matricula">Matrícula:</label>
+            <input type="text" id="matricula" name="matricula" placeholder="AA22AA" required>
+
+            <label for="ano">Ano de Registo:</label>
+            <input type="text" id="ano" name="ano" placeholder="1999" required>
+
+            <label for="km">KM:</label>
+            <input type="text" id="km" name="km" placeholder="123" required>
+
+            <label for="valor_compra">Valor de Compra:</label>
+            <input type="number" id="valor_compra" name="valor_compra" placeholder="1500" required>
+
+            <label for="documento_veiculo">Documento Veículo: (.jpg)</label>
+            <input type="file" id="documento_veiculo" name="documento_veiculo"  accept=".jpg , .jpeg" required>
+
+            <div class="fotos-veiculo">
+                <div class="linha">
+                    <label for="foto_1">Foto 1: (.jpg)</label>
+                    <input type="file" name="foto_1" id="foto_1" accept=".jpg , .jpeg" required>
+                    <label for="foto_2">Foto 2: (.jpg)</label>
+                    <input type="file" name="foto_2" id="foto_2" accept=".jpg , .jpeg">
+                    <label for="foto_3">Foto 3: (.jpg)</label>
+                    <input type="file" name="foto_3" id="foto_3" accept=".jpg , .jpeg">
+                    <label for="foto_4">Foto 4: (.jpg)</label>
+                    <input type="file" name="foto_4" id="foto_4" accept=".jpg , .jpeg">
+                    <label for="foto_5">Foto 5: (.jpg)</label>
+                    <input type="file" name="foto_5" id="foto_5" accept=".jpg , .jpeg">
+                </div>
+                <div class="linha">
+                    <label for="foto_6">Foto 6: (.jpg)</label>
+                    <input type="file" name="foto_6" id="foto_6" accept=".jpg , .jpeg">
+                    <label for="foto_7">Foto 7: (.jpg)</label>
+                    <input type="file" name="foto_7" id="foto_7" accept=".jpg , .jpeg">
+                    <label for="foto_8">Foto 8: (.jpg)</label>
+                    <input type="file" name="foto_8" id="foto_8" accept=".jpg , .jpeg">
+                    <label for="foto_9">Foto 9: (.jpg)</label>
+                    <input type="file" name="foto_9" id="foto_9" accept=".jpg , .jpeg">
+                    <label for="foto_10">Foto 10: (.jpg)</label>
+                    <input type="file" name="foto_10" id="foto_10" accept=".jpg , .jpeg">
+                </div>
+            </div>
+
+            <button type="submit">Submeter</button>
+        </form>
+    </div>
+    <!-- FORMULÁRIO -->
+    <footer class="footer">
+        <script src="/static/js/footer.js"></script>
+    </footer>
+    <script>
+        // SIDE MENU
+        function toggleMenu() {
+            document.querySelector('.sidebar').classList.toggle('open');
+        }
+        // BOTÕES SIDE MENU
+        function homeBtn() {
+            window.location.href = "/Home"; 
+        }
+        function clientesBtn() {
+            window.location.href = "/Clientes"; 
+        }
+        function motasBtn() {
+            window.location.href = "/Veículos"; 
+        }
+        function outrosBtn() {
+            window.location.href = "/Outros"; 
+        }
+        function definicoesBtn() {
+            window.location.href = "/Definições";  
+        }
+    </script>
+</body>
+</html>

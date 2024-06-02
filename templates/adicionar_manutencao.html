@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Adicionar Manutenção</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <link rel="stylesheet"  href="/static/main.css">
+</head>
+<body>
+    <!--  SIDE MENU  -->
+    <div class="sidebar">
+        <button class="expand-btn" onclick="toggleMenu()">☰</button>
+        <div class="menu">
+            <button class="menu-btn" onclick="homeBtn()"><span class="material-symbols-outlined">home</span><span class="menu-text">Home</span></button>
+            <button class="menu-btn" onclick="clientesBtn()"><span class="material-symbols-outlined">person</span><span class="menu-text">Clientes</span></button>
+            <button class="menu-btn" onclick="motasBtn()" id="veiculos"><span class="material-symbols-outlined">sports_motorsports</span><span class="menu-text">Veículos</span></button>
+            <button class="menu-btn" onclick="outrosBtn()"><span class="material-symbols-outlined">widgets</span><span class="menu-text">Outros</span></button>
+        </div>
+        <div class="last-btn">
+            <button class="menu-btn" onclick="definicoesBtn()"><span class="material-symbols-outlined">settings</span><span class="menu-text">Definições</span></button>
+        </div>
+    </div>
+    <!--  SIDE MENU  -->
+    <div class="content">
+        <div class="st1-container">
+            <div class="inner-st1-container">
+                <form action="/Adicionar-Manutencao" method="POST">
+                    <label for="marca">Marca:</label>
+                    <input type="text" name="marca" placeholder="Honda">
+                    <label for="matricula">Matrícula:</label>
+                    <input type="text" name="matricula" placeholder="AA22PP">
+                    <button class="pesquisar-veiculo-btn">Pesquisar</button>
+                </form>
+            </div>
+        </div>
+        <div class="resultados-container">
+            {% if resultados %}
+                {% for veiculo in resultados %}
+                    <div class="inner-resultados-container-veiculos">
+                        <p>●<span><strong>Marca: </strong>{{ veiculo.marca }}</span><span><strong>Modelo: </strong>{{ veiculo.modelo }}</span><span><strong>Matrícula: </strong>{{ veiculo.matricula }}</span></p>
+                        <div class="btn-resultados">
+                            <button class="adicionar-pesquisar-btn" data-veiculo-id="{{ veiculo.id }}" onclick="adicionarEditar(this)">Adicionar Manutenção</button>
+                        </div>
+                    </div>
+                {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+    <script src="/static/js/footer.js"></script>
+    <script>
+        // SIDE MENU
+        function toggleMenu() {
+            document.querySelector('.sidebar').classList.toggle('open');
+        }
+        // BOTÕES SIDE MENU
+        function homeBtn() {
+            window.location.href = "/Home"; 
+        }
+        function clientesBtn() {
+            window.location.href = "/Clientes"; 
+        }
+        function motasBtn() {
+            window.location.href = "/Veículos"; 
+        }
+        function outrosBtn() {
+            window.location.href = "/Outros"; 
+        }
+        function definicoesBtn() {
+            window.location.href = "/Definições";  
+        }
+        function adicionarEditar(botao) {
+            var veiculoId = botao.getAttribute('data-veiculo-id');
+            window.location.href = "/Adicionar-Serviços/" + veiculoId;
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Main Menu </title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <link rel="stylesheet"  href="/static/main.css">
+</head>
+<body>
+    <!--  SIDE MENU  -->
+    <div class="sidebar">
+        <button class="expand-btn" onclick="toggleMenu()">☰</button>
+        <div class="menu">
+            <button class="menu-btn" onclick="homeBtn()" id="home"><span class="material-symbols-outlined">home</span><span class="menu-text">Home</span></button>
+            <button class="menu-btn" onclick="clientesBtn()"><span class="material-symbols-outlined">person</span><span class="menu-text">Clientes</span></button>
+            <button class="menu-btn" onclick="motasBtn()"><span class="material-symbols-outlined">sports_motorsports</span><span class="menu-text">Veículos</span></button>
+            <button class="menu-btn" onclick="outrosBtn()"><span class="material-symbols-outlined">widgets</span><span class="menu-text">Outros</span></button>
+        </div>
+        <div class="last-btn">
+            <button class="menu-btn" onclick="definicoesBtn()"><span class="material-symbols-outlined">settings</span><span class="menu-text">Definições</span></button>
+        </div>
+    </div>
+    <!--  SIDE MENU  -->
+    <div class="main-container">
+        <div class="inner-container">
+            <button onclick="adicionarBtn()"><span class="material-symbols-outlined">person_add</span><span class="text-text">Criar Novo Alugador</span></button>
+            <button onclick="adicionarBtnBtn()"><span class="material-symbols-outlined">motorcycle</span><span class="text-text">Criar Novo Veículo</span></button>
+            <button onclick="verPagamentoBtn()"><span class="material-symbols-outlined">monitoring</span><span class="text-text">Ver Pagamentos Pendentes</span></button>
+            <button onclick="verSinistrosBtn()"><span class="material-symbols-outlined">car_crash</span><span class="text-text">Ver Sinistros</span></button>
+        </div>
+    </div>
+    <footer class="footer">
+        <script src="/static/js/footer.js"></script>
+    </footer>
+    <script>
+        // SIDE MENU
+        function toggleMenu() {
+            document.querySelector('.sidebar').classList.toggle('open');
+        }
+        // BOTÕES SIDE MENU
+        function homeBtn() {
+            window.location.href = "/Home"; 
+        }
+        function clientesBtn() {
+            window.location.href = "/Clientes"; 
+        }
+        function motasBtn() {
+            window.location.href = "/Veículos"; 
+        }
+        function outrosBtn() {
+            window.location.href = "/Outros"; 
+        }
+        function definicoesBtn() {
+            window.location.href = "/Definições";  
+        }
+        function adicionarBtn() {
+            window.location.href = "/Criar-Novo-Cliente";  
+        }
+        function verPagamentoBtn() {
+            window.location.href = "/Pagamentos";  
+        }
+        function adicionarBtnBtn() {
+            window.location.href = "/Criar-Novo-Veiculo";  
+        }
+        function verSinistrosBtn() {
+            window.location.href = "/Lucro";  
+        }
+    </script>
+</body>
+</html>

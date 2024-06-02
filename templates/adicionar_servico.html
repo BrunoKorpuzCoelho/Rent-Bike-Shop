@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Adicionar Serviço</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <link rel="stylesheet"  href="/static/main.css">
+</head>
+<body>
+    <!--  SIDE MENU  -->
+    <div class="sidebar">
+        <button class="expand-btn" onclick="toggleMenu()">☰</button>
+        <div class="menu">
+            <button class="menu-btn" onclick="homeBtn()"><span class="material-symbols-outlined">home</span><span class="menu-text">Home</span></button>
+            <button class="menu-btn" onclick="clientesBtn()"><span class="material-symbols-outlined">person</span><span class="menu-text">Clientes</span></button>
+            <button class="menu-btn" onclick="motasBtn()" id="veiculos"><span class="material-symbols-outlined">sports_motorsports</span><span class="menu-text">Veículos</span></button>
+            <button class="menu-btn" onclick="outrosBtn()"><span class="material-symbols-outlined">widgets</span><span class="menu-text">Outros</span></button>
+        </div>
+        <div class="last-btn">
+            <button class="menu-btn" onclick="definicoesBtn()"><span class="material-symbols-outlined">settings</span><span class="menu-text">Definições</span></button>
+        </div>
+    </div>
+    <!--  SIDE MENU  -->
+    <div class="tabela-adicionar-servico">
+        <table class="tabela-adicionar-servico-tabela">
+            <thead>
+                <tr>
+                    <th>Marca</th>
+                    <th>Modelo</th>
+                    <th>Matrícula</th>
+                    <th>Ano de Registo</th>
+                    <th>KM</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>{{ veiculo.marca }}</td>
+                    <td>{{ veiculo.modelo }}</td>
+                    <td>{{ veiculo.matricula }}</td>
+                    <td>{{ veiculo.ano }}</td>
+                    <td>{{ veiculo.km }}</td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="formulario-adicionar-servico">
+            <form action="/Adicionar-Serviços/{{ veiculo.id }}" method="POST">
+                <div class="form-group">
+                    <label for="descricao" class="form-label">Descrição do Serviço:</label>
+                    <input type="text" name="descricao" class="form-input" placeholder="Mudança de filtro de óleo">
+                </div>
+                
+                <div class="form-group">
+                    <label for="valor_manutencao" class="form-label">Valor Total do Serviço:</label>
+                    <input type="number" name="valor_manutencao" class="form-input" placeholder="20">
+                </div>
+                
+                <div class="form-group">
+                    <label for="km" class="form-label">Quilômetros Atuais:</label>
+                    <input type="text" name="km" class="form-input" placeholder="2090">
+                </div>
+                
+                <button type="submit" class="btn-btn-primary" style="margin-right: 25px;">Guardar Serviço</button>
+            </form>
+        </div>
+        <script src="/static/js/footer.js"></script>
+    </div>
+    <script>
+        // SIDE MENU
+        function toggleMenu() {
+            document.querySelector('.sidebar').classList.toggle('open');
+        }
+        // BOTÕES SIDE MENU
+        function homeBtn() {
+            window.location.href = "/Home"; 
+        }
+        function clientesBtn() {
+            window.location.href = "/Clientes"; 
+        }
+        function motasBtn() {
+            window.location.href = "/Veículos"; 
+        }
+        function outrosBtn() {
+            window.location.href = "/Outros"; 
+        }
+        function definicoesBtn() {
+            window.location.href = "/Definições";  
+        }
+    </script>
+</body>
+</html>

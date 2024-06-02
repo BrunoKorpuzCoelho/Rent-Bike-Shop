@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pagamentos Pendentes</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <link rel="stylesheet" href="/static/main.css">
+</head>
+<body>
+    <!-- SIDE MENU -->
+    <div class="sidebar">
+        <button class="expand-btn" onclick="toggleMenu()">☰</button>
+        <div class="menu">
+            <button class="menu-btn" onclick="homeBtn()"><span class="material-symbols-outlined">home</span><span class="menu-text">Home</span></button>
+            <button class="menu-btn" onclick="clientesBtn()" id="clientes"><span class="material-symbols-outlined">person</span><span class="menu-text">Clientes</span></button>
+            <button class="menu-btn" onclick="motasBtn()"><span class="material-symbols-outlined">sports_motorsports</span><span class="menu-text">Veículos</span></button>
+            <button class="menu-btn" onclick="outrosBtn()"><span class="material-symbols-outlined">widgets</span><span class="menu-text">Outros</span></button>
+        </div>
+        <div class="last-btn">
+            <button class="menu-btn" onclick="definicoesBtn()"><span class="material-symbols-outlined">settings</span><span class="menu-text">Definições</span></button>
+        </div>
+    </div>
+    <!-- SIDE MENU -->
+    <div class="primeiro-contentor">
+        {% if clientes %}
+            <div class="conteudo-inner">
+                {% for cliente in clientes %}
+                    <div class="conteudo-pagamentos">
+                        <p>
+                            <span><strong>Nome:</strong> {{ cliente.nome }}</span>
+                            <span><strong>NIF:</strong> {{ cliente.nif }}</span>
+                            <span><strong>Email:</strong> {{ cliente.email }}</span>
+                            <span><strong>Telefone:</strong> {{ cliente.telefone }}</span>
+                            <span><strong>Valor a Pagar:</strong> {{ cliente.valor_pagar }}</span>
+                            <span><strong>Veículo Alugado:</strong> {{ cliente.veiculo_alugado }}</span>
+                            <span><strong>Data de Pagamento:</strong> <span id="data-pagamento-{{ cliente.id }}">{{ cliente.data_pagamento }}</span></span>
+                            <button class="validar-pagamento" data-cliente-id="{{ cliente.id }}" data-data-pagamento="{{ cliente.data_pagamento }}">Validar</button>
+                        </p>
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <p>Nenhum pagamento pendente encontrado.</p>
+        {% endif %}
+    </div>
+    <footer class="footer">
+        <script src="/static/js/footer.js"></script>
+    </footer>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const buttons = document.querySelectorAll('.validar-pagamento');
+        buttons.forEach(button => {
+            button.addEventListener('click', function() {
+                const clienteId = this.getAttribute('data-cliente-id');
+                const dataPagamento = this.getAttribute('data-data-pagamento');
+                fetch(`/validar-pagamento/${clienteId}`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ dataPagamento: dataPagamento })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.message) {
+                        alert(data.message);
+                        if (data.nova_data_pagamento) {
+                            document.getElementById(`data-pagamento-${clienteId}`).textContent = data.nova_data_pagamento;
+                        }
+                        // Atualizar a página após a validação do pagamento
+                        window.location.reload();
+                    }
+                })
+                .catch(error => console.error('Erro:', error));
+            });
+        });
+    });
+
+    function toggleMenu() {
+        const sidebar = document.querySelector('.sidebar');
+        sidebar.classList.toggle('collapsed');
+    }
+
+    function homeBtn() {
+        window.location.href = "/Home";
+    }
+
+    function clientesBtn() {
+        window.location.href = "/Clientes";
+    }
+
+    function motasBtn() {
+        window.location.href = "/Motas";
+    }
+
+    function outrosBtn() {
+        window.location.href = "/Outros";
+    }
+
+    function definicoesBtn() {
+        window.location.href = "/Definicoes";
+    }
+</script>
+</body>
+</html>

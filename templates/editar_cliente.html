@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editar Cliente</title>
+    <link rel="stylesheet"  href="/static/main.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+</head>
+<body>
+    <!--  SIDE MENU  -->
+    <div class="sidebar">
+        <button class="expand-btn" onclick="toggleMenu()">☰</button>
+        <div class="menu">
+            <button class="menu-btn" onclick="homeBtn()"><span class="material-symbols-outlined">home</span><span class="menu-text">Home</span></button>
+            <button class="menu-btn" onclick="clientesBtn()" id="clientes"><span class="material-symbols-outlined">person</span><span class="menu-text">Clientes</span></button>
+            <button class="menu-btn" onclick="motasBtn()"><span class="material-symbols-outlined">sports_motorsports</span><span class="menu-text">Veículos</span></button>
+            <button class="menu-btn" onclick="outrosBtn()"><span class="material-symbols-outlined">widgets</span><span class="menu-text">Outros</span></button>
+        </div>
+        <div class="last-btn">
+            <button class="menu-btn" onclick="definicoesBtn()"><span class="material-symbols-outlined">settings</span><span class="menu-text">Definições</span></button>
+        </div>
+    </div>
+    <!--  SIDE MENU  -->
+    <div class="content-editar">
+        <form action="/Editar-Cliente/{{ cliente.id }}" method="POST" enctype="multipart/form-data">
+            <div class="form-group">
+                <label for="nome" class="form-label">Nome:</label>
+                <input type="text" name="nome" class="form-input" value="{{ cliente.nome }}">
+            </div>
+            
+            <div class="form-group">
+                <label for="nif" class="form-label">Número de Contribuinte:</label>
+                <input type="text" name="nif" class="form-input" value="{{ cliente.nif }}">
+            </div>
+            
+            <div class="form-group">
+                <label for="telefone" class="form-label">Número de Telefone:</label>
+                <input type="text" name="telefone" class="form-input" value="{{ cliente.telefone }}">
+            </div>
+            
+            <div class="form-group">
+                <label for="email" class="form-label">E-mail:</label>
+                <input type="email" name="email" class="form-input" value="{{ cliente.email }}">
+            </div>
+            
+            <div class="form-group">
+                <label for="morada" class="form-label">Morada:</label>
+                <input type="text" name="morada" class="form-input" value="{{ cliente.morada }}">
+            </div>
+            
+            <div class="form-group">
+                <label for="valor_pagar" class="form-label">Valor a Pagar:</label>
+                <input type="text" name="valor_pagar" class="form-input" value="{{ cliente.valor_pagar }}">
+            </div>
+            
+            <div class="form-group">
+                <label for="data_pagamento" class="form-label">Data de Pagamento:</label>
+                <input type="date" name="data_pagamento" class="form-input" value="{{ cliente.data_pagamento }}">
+            </div>
+            
+            <div class="form-group">
+                <label for="veiculo_alugado" class="form-label">Veículo Alugado:</label>
+                <input type="text" name="veiculo_alugado" class="form-input" value="{{ cliente.veiculo_alugado }}">
+            </div>
+            
+            <div class="form-group">
+                <label for="contrato" class="form-label">Contrato:</label>
+                <input type="file" name="contrato" class="form-input" accept=".pdf" >
+            </div>
+            <button type="submit" class="btn-btn-primary" style="margin-right: 25px;">Salvar Alterações</button>
+            <button class="btn-btn-primary"><a href="/Contratos/{{ cliente.id }}" style="color: inherit; text-decoration: none;">Contratos</a></button>
+        </form>
+    </div>
+    <footer class="footer">
+        <script src="/static/js/footer.js"></script>
+    </footer>
+    <script>
+        // SIDE MENU
+        function toggleMenu() {
+            document.querySelector('.sidebar').classList.toggle('open');
+        }
+        // BOTÕES SIDE MENU
+        function homeBtn() {
+            window.location.href = "/Home"; 
+        }
+        function clientesBtn() {
+            window.location.href = "/Clientes"; 
+        }
+        function motasBtn() {
+            window.location.href = "/Veículos"; 
+        }
+        function outrosBtn() {
+            window.location.href = "/Outros"; 
+        }
+        function definicoesBtn() {
+            window.location.href = "/Definições";  
+        }
+        function toTitleCase(str) {
+            return str.replace(/\w\S*/g, function(txt){
+                return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+            });
+        }
+        function toUpperCase(str) {
+            return str.toUpperCase();
+        }
+        document.getElementById('edit-form').addEventListener('submit', function(event) {
+            const nomeInput = document.querySelector('input[name="nome"]');
+            const veiculoAlugadoInput = document.querySelector('input[name="veiculo_alugado"]');
+            nomeInput.value = toTitleCase(nomeInput.value);
+            veiculoAlugadoInput.value = toUpperCase(veiculoAlugadoInput.value);
+        });
+        document.addEventListener('DOMContentLoaded', function() {
+            const nomeInput = document.querySelector('input[name="nome"]');
+            const veiculoAlugadoInput = document.querySelector('input[name="veiculo_alugado"]');
+            nomeInput.value = toTitleCase(nomeInput.value);
+            veiculoAlugadoInput.value = toUpperCase(veiculoAlugadoInput.value);
+        });
+    </script>
+</body>
+</html>

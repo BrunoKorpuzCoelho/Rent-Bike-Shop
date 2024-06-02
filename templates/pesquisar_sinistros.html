@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pesquisar Sinistro</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <link rel="stylesheet"  href="/static/main.css">
+    <style>
+        body {
+            display: flex;
+            margin: 0;
+            font-family: Arial, sans-serif;
+        }
+    </style>
+</head>
+<body>
+    <!-- SIDE MENU -->
+    <div class="sidebar">
+        <button class="expand-btn" onclick="toggleMenu()">☰</button>
+        <div class="menu">
+            <button class="menu-btn" onclick="homeBtn()"><span class="material-symbols-outlined">home</span><span class="menu-text">Home</span></button>
+            <button class="menu-btn" onclick="clientesBtn()" id="clientes"><span class="material-symbols-outlined">person</span><span class="menu-text">Clientes</span></button>
+            <button class="menu-btn" onclick="motasBtn()"><span class="material-symbols-outlined">sports_motorsports</span><span class="menu-text">Veículos</span></button>
+            <button class="menu-btn" onclick="outrosBtn()"><span class="material-symbols-outlined">widgets</span><span class="menu-text">Outros</span></button>
+        </div>
+        <div class="last-btn">
+            <button class="menu-btn" onclick="definicoesBtn()"><span class="material-symbols-outlined">settings</span><span class="menu-text">Definições</span></button>
+        </div>
+    </div>
+    <!-- SIDE MENU -->
+    <div class="pesquisar-container">
+        <div class="pesquisar-container-labels">
+            <form method="POST" action="/Pesquisar-Sinistros">
+                <label for="matricula">Matrícula:</label>
+                <input type="text" placeholder="XX00PP" id="matricula" name="matricula" required>
+                <button type="submit">Pesquisar</button>
+            </form>
+            <p class="titulo-input">Por favor, Digite em Letras Maiúsculas</p>
+        </div>
+    </div>
+    <div class="main-resultados-container">
+        <div class="inner-resultados-containerr">
+            {% if sinistros is not none %}
+                {% if sinistros %}
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Nome Alugador</th>
+                                <th>Contacto Alugador</th>
+                                <th>Data de Início</th>
+                                <th>Data de Fim</th>
+                                <th>Estado</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for sinistro in sinistros %}
+                                <tr>
+                                    <td>{{ alugadores[sinistro.id].nome }}</td>
+                                    <td>{{ alugadores[sinistro.id].telefone }}</td>
+                                    <td>{{ sinistro.data_inicio }}</td>
+                                    <td>{{ sinistro.data_fim }}</td>
+                                    <td>{{ sinistro.estado }}</td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                {% else %}
+                    <p>Nenhum sinistro encontrado para o veículo com matrícula {{ veiculo.matricula }}.</p>
+                {% endif %}
+            {% endif %}
+        </div>
+    </div>
+    <footer class="footer">
+        <script src="/static/js/footer.js"></script>
+    </footer>
+    <script>
+        // SIDE MENU
+        function toggleMenu() {
+            document.querySelector('.sidebar').classList.toggle('open');
+        }
+        // BOTÕES SIDE MENU
+        function homeBtn() {
+            window.location.href = "/Home"; 
+        }
+        function clientesBtn() {
+            window.location.href = "/Clientes"; 
+        }
+        function motasBtn() {
+            window.location.href = "/Veículos"; 
+        }
+        function outrosBtn() {
+            window.location.href = "/Outros"; 
+        }
+        function definicoesBtn() {
+            window.location.href = "/Definições";  
+        }
+    </script>
+</body>
+</html>
